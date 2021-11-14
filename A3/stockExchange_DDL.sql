@@ -3,6 +3,14 @@ CREATE DATABASE stockexchange;
 
 \c stockexchange
 
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    username varchar UNIQUE,
+    password varchar,
+    isBroker BOOLEAN
+);
+CREATE EXTENSION pgcrypto;
+
 CREATE TABLE investorsAndTraders(
     i_id INT,
     name_i VARCHAR(30),

@@ -5,6 +5,7 @@ drop user investor;
 drop user broker;
 
 CREATE USER admin with password '1234' createdb;
+grant USAGE,SELECT ON ALL SEQUENCES IN SCHEMA public to admin;
 grant ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO admin;
 
 CREATE USER database_supervisor with password '1234' createdb;
