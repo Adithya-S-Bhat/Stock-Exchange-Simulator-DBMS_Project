@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Card, makeStyles, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Axios from 'axios';
@@ -46,8 +46,13 @@ const SignUpPage = () => {
     });
    
   };
+  const handleLogIn=()=>{
+    navigate("/login");
+  };
 
   return (
+    <Card variant="outlined" style={{width:"35%",marginLeft:"32%",marginTop:"3%"}}>
+    <Typography variant="h4" style={{padding:"4%"}}>Sign Up</Typography>
     <form className={classes.root} onSubmit={handleSubmit}>
       <TextField
         label="First Name"
@@ -82,10 +87,14 @@ const SignUpPage = () => {
       <div>
 
         <Button type="submit" variant="contained" color="primary">
-          Signup
+          Submit
         </Button>
       </div>
     </form>
+    <Typography>Have An Account?
+      <Button onClick={handleLogIn} color="secondary" variant="text">Log In</Button>
+    </Typography>
+    </Card>
   );
 };
 

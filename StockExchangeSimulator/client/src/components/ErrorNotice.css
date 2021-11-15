@@ -1,15 +1,15 @@
 .error-notice{
     padding: 0.5rem;
-    padding-left: 14rem;
     margin : 1rem 0;
-    margin-left: 22rem;
+    margin-left: 6rem;
     border: 1px solid white;
     border-radius: 9px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width:50%;
-    font-weight: 700;
+    font-weight: 300;
+    color:red;
 }
 .error-notice button{
     background-color:mediumslateblue;

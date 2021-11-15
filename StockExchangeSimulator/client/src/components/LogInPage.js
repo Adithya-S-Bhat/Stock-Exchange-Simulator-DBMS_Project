@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography, Card} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Axios from 'axios';
@@ -52,34 +52,43 @@ const LogInForm = () => {
     }
   });
   };
+  const handleSignUp=()=>{
+    navigate("/signup");
+  };
 
   return (
     <div className="login">
-    {error && (<ErrorNotice message={error} clearError={ ()=> setError(undefined)}/>)}
-    <form className={classes.root} onSubmit={handleSubmit}>
-      <TextField
-        label="Email"
-        variant="filled"
-        type="email"
-        required
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-      <TextField
-        label="Password"
-        variant="filled"
-        type="password"
-        required
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <div>
+      <Card variant="outlined" style={{width:"30%",marginLeft:"34%",marginTop:"8%"}}>
+        <Typography variant="h4" style={{padding:"4%"}}>Login</Typography>
+        {error && (<ErrorNotice message={error} clearError={ ()=> setError(undefined)}/>)}
+        <form className={classes.root} onSubmit={handleSubmit}>
+          <TextField
+            label="Email"
+            variant="filled"
+            type="email"
+            required
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <TextField
+            label="Password"
+            variant="filled"
+            type="password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <div>
 
-        <Button type="submit" variant="contained" color="primary">
-          Log In
-        </Button>
-      </div>
-    </form>
+            <Button type="submit" variant="contained" color="primary">
+              Submit
+            </Button>
+          </div>
+        </form>
+            <Typography>No Account?
+              <Button onClick={handleSignUp} color="secondary" variant="text">Sign Up</Button>
+            </Typography>
+        </Card>
     </div>
   );
 };
