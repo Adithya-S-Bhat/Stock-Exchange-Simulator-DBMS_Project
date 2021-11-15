@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card, makeStyles, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Axios from 'axios';
@@ -26,91 +25,83 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignUpPage = () => {
+const BrokerForm = () => {
   const classes = useStyles();
   // create state variables for each input
   // const [firstName, setFirstName] = useState('');
   // const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = React.useState('Investor');
+  const [name, setName] = useState('');
+  const [website, setWebsite] = useState('');
+  const [address, setAddress] = React.useState('');
+  const [rate, setRate] = useState('');
+
   let navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newUser = {
+    const newBroker = {
         //firstName, lastName, 
-        email, password, user
+        name, website, address,rate
     };
-    console.log(email, password,user);
+    console.log(name, website, address,rate);
      Axios.post(
-        "http://localhost:8000/users/signup",
-        newUser
+        "http://localhost:8000/users/brokerform",
+        newBroker
     ).then((response)=>{
-        if(user==="Investor")
-          navigate("/investorForm"); 
-        else
-          navigate("/brokerForm");
+          navigate("/home"); 
     });
-   
-  };
+  }
   const handleLogIn=()=>{
     navigate("/login");
   };
 
-  const handleChange = (event) => {
-    setUser(event.target.value);
-  };
 
   return (
     <Card variant="outlined" style={{width:"35%",marginLeft:"32%",marginTop:"6%"}}>
-    <Typography variant="h4" style={{padding:"4%"}}>Sign Up</Typography>
+    <Typography variant="h4" style={{padding:"4%"}}>Broker Details</Typography>
     <form className={classes.root} onSubmit={handleSubmit}>
-      {/*<TextField
-        label="First Name"
+      <TextField
+        label="Name"
         variant="filled"
         required
-        value={firstName}
-        onChange={e => setFirstName(e.target.value)}
+        value={name}
+        onChange={e => setName(e.target.value)}
       />
       <TextField
-        label="Last Name"
+        label="Website"
         variant="filled"
         required
-        value={lastName}
-        onChange={e => setLastName(e.target.value)}
-      />*/}
-      <TextField
-        label="Email"
-        variant="filled"
-        type="email"
-        required
-        value={email}
-        onChange={e => setEmail(e.target.value)}
+        value={website}
+        onChange={e => setWebsite(e.target.value)}
       />
       <TextField
-        label="Password"
+        label="Address"
         variant="filled"
-        type="password"
+        // type="email"
         required
-        value={password}
-        onChange={e => setPassword(e.target.value)}
+        value={address}
+        onChange={e => setAddress(e.target.value)}
       />
-      <RadioGroup row aria-label="i/b" name="row-radio-buttons-group" value={user} onChange={handleChange}>
-        <FormControlLabel value="Investor" control={<Radio />} label="Investor"/>
-        <FormControlLabel value="Broker" control={<Radio />} label="Broker" />
-      </RadioGroup>
+      <TextField
+        label="Brokerage Rate"
+        variant="filled"
+        type="number"
+        InputProps={{ inputProps: { min: 1, max: 10 } }}
+        required
+        value={rate}
+        onChange={e => setRate(e.target.value)}
+      />
       <div>
         <Button type="submit" variant="contained" color="primary">
           Submit
         </Button>
       </div>
     </form>
-    <Typography>Have An Account?
+    {/* <Typography>Have An Account?
       <Button onClick={handleLogIn} color="secondary" variant="text">Log In</Button>
-    </Typography>
+    </Typography> */}
     </Card>
   );
 };
 
-export default SignUpPage;
+export default BrokerForm;

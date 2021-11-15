@@ -38,12 +38,23 @@ const LogInForm = () => {
     const newUser = {
       email, password
   };
+  
     Axios.post(
       "http://localhost:8000/users/login",
       newUser
   ).then((response)=>{
     console.log(response.data.code)
     if(response.data.code===1){
+      localStorage.setItem("username", email);
+    //   let username = localStorage.getItem("username")
+    // const userName = {username};
+    
+    // Axios.post(
+    //     "http://localhost:8000/users/usersTable",
+    //     userName
+    // ).then((response)=>{
+    //     console.log(response.data); 
+    // });
       navigate("/home");
     }
     else{

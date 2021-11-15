@@ -170,7 +170,6 @@ export default function Home(){
     const id = opennotifi ? 'simple-popover' : undefined;
         
     const [value, setValue] = React.useState(0);
-        
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };

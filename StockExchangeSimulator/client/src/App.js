@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './home'
 import LogInForm from './components/LogInPage';
 import SignUpPage from './components/SignUpPage';
+import InvestorForm from './components/investorForm';
+import BrokerForm from './components/brokerForm';
 
 class App extends Component {
   render(){
@@ -15,6 +17,8 @@ class App extends Component {
               <Route exact path="/home" element={<Home/>}/>
               <Route exact path="/login" element={<LogInForm/>}/>
               <Route exact path="/signup" element={<SignUpPage/>}/>
+              <Route exact path="/investorForm" element={<InvestorForm/>}/>
+              <Route exact path="/brokerForm" element={<BrokerForm/>}/>
           </Routes>
           </Router>
       </div>

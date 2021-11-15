@@ -12,7 +12,7 @@ CREATE TABLE users(
 CREATE EXTENSION pgcrypto;
 
 CREATE TABLE investorsAndTraders(
-    i_id INT,
+    i_id SERIAL,
     name_i VARCHAR(30),
     dob DATE,
     aadharNumber VARCHAR(20),
@@ -139,7 +139,7 @@ CREATE TABLE handlesCommodities(
 );
 
 CREATE TABLE brokers(
-    broker_id INT,
+    broker_id SERIAL,
     name VARCHAR(20),
     website VARCHAR(30),
     address VARCHAR(50),
