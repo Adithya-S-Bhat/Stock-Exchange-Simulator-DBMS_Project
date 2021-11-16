@@ -22,6 +22,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Popover from '@material-ui/core/Popover';
 import Link from '@material-ui/core/Link';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -31,7 +32,10 @@ import Box from '@material-ui/core/Box';
 import HomePage from './components/homePage'
 
 import Tooltip from '@material-ui/core/Tooltip';
-
+import Profile from './components/Profile';
+import FooterComponent from './components/Footer'
+import Funds from './components/Funds'
+import AboutUs from './components/AboutUs'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -221,7 +225,6 @@ export default function Home(){
                     <AccountCircle />
                 </IconButton> 
                 <Menu id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{vertical: 'top',horizontal: 'right',}} keepMounted transformOrigin={{vertical: 'top', horizontal: 'right',}} open={openprof} onClose={handleClose}>
-                <MenuItem onClick={handleClose}><ProfileIcon/>&nbsp;My Profile</MenuItem>
                 <Link href={"//"+window.location.hostname+":3000/logout"} color="inherit" style={{textDecoration:"none",}}><MenuItem onClick={handleClose}><LogoutIcon/>&nbsp;Logout</MenuItem></Link>
                 </Menu>
                 </div>
@@ -247,7 +250,8 @@ export default function Home(){
                     <Tab label="Home" icon={<HomeIcon/>} {...a11yProps(0)}/>
                     <Divider/>
                     <Tab label="My Profile" icon={<ProfileIcon/>} {...a11yProps(1)} />
-                    <Tab label="About Us" icon={<InfoIcon/>} {...a11yProps(2)} />
+                    <Tab label="Funds" icon={<AccountBalanceIcon/>} {...a11yProps(2)} />
+                    <Tab label="About Us" icon={<InfoIcon/>} {...a11yProps(3)} />
             </Tabs>
             </Drawer>
             <main className={classes.content}>
@@ -256,6 +260,17 @@ export default function Home(){
                 <HomePage/>
                 {/*<Home userinfo={userinfo}/>*/}
             </TabPanel>
+            <TabPanel value={value} index={2}>
+                <Profile/>
+                {/*<Home userinfo={userinfo}/>*/}
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+                <Funds/>
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                <AboutUs/>
+            </TabPanel>
+            <FooterComponent/>
             </main>
         </div>
     );

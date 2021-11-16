@@ -32,6 +32,7 @@ const LogInForm = () => {
   const [error,setError]=useState('');
   let navigate = useNavigate();
 
+  
   const handleSubmit = e => {
     e.preventDefault();
     console.log(email, password);

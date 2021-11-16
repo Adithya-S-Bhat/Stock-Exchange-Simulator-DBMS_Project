@@ -12,7 +12,7 @@ CREATE TABLE users(
 CREATE EXTENSION pgcrypto;
 
 CREATE TABLE investorsAndTraders(
-    i_id SERIAL,
+    i_id INT,
     name_i VARCHAR(30),
     dob DATE,
     aadharNumber VARCHAR(20),
@@ -139,7 +139,7 @@ CREATE TABLE handlesCommodities(
 );
 
 CREATE TABLE brokers(
-    broker_id SERIAL,
+    broker_id INT,
     name VARCHAR(20),
     website VARCHAR(30),
     address VARCHAR(50),
@@ -337,7 +337,9 @@ BEGIN
             return_value := 2;
         END IF;    
 
-            
+     --0=not enough margin
+     --1=valid
+     --2=waiting list       
     ELSE  
         raise notice 'Not enough Margin';
         return_value := 0;

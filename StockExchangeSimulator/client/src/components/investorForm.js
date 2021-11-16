@@ -58,16 +58,33 @@ const InvestorForm =() => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(name,dob,aadhar,phone,pin,city,state);
-        const newUser = {
-            name,dob,aadhar,phone,pin,city,state 
-        };
+        let username = localStorage.getItem("username");
+        const user = {username};
         Axios.post(
-            "http://localhost:8000/users/investorForm",
-            newUser
+            "http://localhost:8000/users/getUserId",
+            user
         ).then((response)=>{
-            navigate("/home");
+            let userID = response.data.id;
+            const newUser = {
+                userID,name,dob,aadhar,phone,pin,city,state,brokerSelected
+            };
+            Axios.post(
+                "http://localhost:8000/users/investorForm",
+                newUser
+            ).then((response)=>{
+                navigate("/home");
+            });
         });
+        // console.log(name,dob,aadhar,phone,pin,city,state);
+        // const newUser = {
+        //     name,dob,aadhar,phone,pin,city,state 
+        // };
+        // Axios.post(
+        //     "http://localhost:8000/users/investorForm",
+        //     newUser
+        // ).then((response)=>{
+        //     navigate("/home");
+        // });
     }
     return (   
         <Card variant="outlined" style={{width:"38%",marginLeft:"30%",marginTop:"1%"}}>
@@ -129,12 +146,12 @@ const InvestorForm =() => {
             value={brokerSelected}
             onChange={e => setBrokerSelected(e.target.value)}>
                 <MenuItem value="">
-                    <em>Broker - brokerageRate</em>
+                    <em>Broker - website - brokerageRate</em>
                 </MenuItem>
                 {res.map((record) => (
                     //console.log(record)
                     <MenuItem key={record.broker_id} value={record.broker_id}>
-                        {record.name+" - "+record.brokeragerate+"%"}
+                        {record.name+" - "+record.website+" - "+record.brokeragerate+"%"}
                     </MenuItem>
                 ))}
             </Select>

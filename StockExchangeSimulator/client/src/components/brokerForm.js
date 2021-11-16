@@ -39,18 +39,26 @@ const BrokerForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newBroker = {
-        //firstName, lastName, 
-        name, website, address,rate
-    };
-    console.log(name, website, address,rate);
-     Axios.post(
-        "http://localhost:8000/users/brokerform",
-        newBroker
+    let username = localStorage.getItem("username");
+        const user = {username};
+        Axios.post(
+            "http://localhost:8000/users/getUserId",
+            user
+        ).then((response)=>{
+            let userID = response.data.id;
+            const newBroker = {
+              //firstName, lastName, 
+              userID, name, website, address,rate
+          };
+        Axios.post(
+          "http://localhost:8000/users/brokerform",
+            newBroker
     ).then((response)=>{
           navigate("/home"); 
     });
-  }
+  });
+}
+
   const handleLogIn=()=>{
     navigate("/login");
   };

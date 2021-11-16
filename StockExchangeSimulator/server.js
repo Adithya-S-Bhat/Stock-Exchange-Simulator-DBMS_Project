@@ -9,15 +9,43 @@ app.use(cors());
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.use('/users', require('./routes/userRouter'));
-// client.query('SELECT * FROM banks WHERE bankname=$1 AND branch=$2',['ICICI Bank','West Bengal'], (err, res) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log(res.rows);
-//     }
-//     client.end();
-// });
 
-// client.on("end", () => {
-//     console.log("Disconnected from database");
-// });
+
+const { Client } = require('pg');
+const client2 = new Client({
+    host: 'localhost',
+    port: 5432,
+    user: 'database_supervisor',
+    password: '1234',
+    database: 'stockexchange'
+});
+client2.connect();
+
+client2.on("connect", () => {
+    console.log("Connected to database through supervisor");
+});
+setInterval(function() {
+    UpdateStocks()
+}, 30000);
+
+function UpdateStocks(){
+    client2.query("select * from stocks", (err,response)=>{
+        if (err) {
+            console.log(err);
+        } else {
+            for (let i=0; i<response.rows.length; i++){
+                let chance = (Math.random()) *20 - 10;
+		        let price = chance/10; 
+                client2.query("UPDATE stocks set currentValue=currentValue+$2 where s_id=$1",[response.rows[i].s_id,price], (err,response2)=>{
+                    if (err) {
+                        console.log("error");
+                    } else {
+                        // return response.status(200).send({"Update":"OK"});
+                        //console.log("Update Done");
+                    }
+        });
+    }
+}
+});
+}
+    
