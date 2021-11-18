@@ -70,7 +70,7 @@ INSERT INTO stocks VALUES(
     'Mid Cap'
 ),(
     40,
-    'Relaince',
+    'Reliance',
     2620.00,
     134110,
     'Large Cap'

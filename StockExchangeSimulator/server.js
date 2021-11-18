@@ -12,6 +12,7 @@ app.use('/users', require('./routes/userRouter'));
 
 
 const { Client } = require('pg');
+const { report } = require('./routes/userRouter');
 const client2 = new Client({
     host: 'localhost',
     port: 5432,
@@ -24,9 +25,33 @@ client2.connect();
 client2.on("connect", () => {
     console.log("Connected to database through supervisor");
 });
-setInterval(function() {
+/*setInterval(function() {
     UpdateStocks()
-}, 30000);
+}, 3000);*/
+
+const admin = new Client({
+    host: 'localhost',
+    port: 5432,
+    user: 'admin',
+    password: '1234',
+    database: 'stockexchange'
+});
+admin.connect();
+
+function updateMarketValue(){
+    client2.query("select sum(currentvalue) from stocks",(err,response)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            //console.log(response.rows[0].sum)
+            admin.query("insert into marketvalue(dt,totalValue) values(NOW(),$1)",[response.rows[0].sum],(err,response)=>{
+                if(err)
+                    console.log(err);
+            });
+        }
+    }); 
+}
 
 function UpdateStocks(){
     client2.query("select * from stocks", (err,response)=>{
@@ -44,6 +69,7 @@ function UpdateStocks(){
                         //console.log("Update Done");
                     }
         });
+        updateMarketValue();
     }
 }
 });

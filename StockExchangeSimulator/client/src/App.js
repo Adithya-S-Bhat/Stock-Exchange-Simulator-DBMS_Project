@@ -6,6 +6,8 @@ import LogInForm from './components/LogInPage';
 import SignUpPage from './components/SignUpPage';
 import InvestorForm from './components/investorForm';
 import BrokerForm from './components/brokerForm';
+import BrokerView from './components/BrokerView';
+import BrokerHome from './brokerHome';
 
 class App extends Component {
   render(){
@@ -15,10 +17,13 @@ class App extends Component {
             <Routes>
               <Route exact path="/" element={<LogInForm/>}/>
               <Route exact path="/home" element={<Home/>}/>
+              <Route exact path="/brokerHome" element={<BrokerHome/>}/>
               <Route exact path="/login" element={<LogInForm/>}/>
               <Route exact path="/signup" element={<SignUpPage/>}/>
               <Route exact path="/investorForm" element={<InvestorForm/>}/>
               <Route exact path="/brokerForm" element={<BrokerForm/>}/>
+              <Route exact path="/brokerView" element={<BrokerView/>}/>
+
           </Routes>
           </Router>
       </div>

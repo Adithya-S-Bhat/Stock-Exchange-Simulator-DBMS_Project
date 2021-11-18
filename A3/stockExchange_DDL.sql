@@ -11,6 +11,12 @@ CREATE TABLE users(
 );
 CREATE EXTENSION pgcrypto;
 
+CREATE TABLE marketvalue(
+    id SERIAL PRIMARY KEY,
+    dt DATE,
+    totalValue DECIMAL(10,2)
+);
+
 CREATE TABLE investorsAndTraders(
     i_id INT,
     name_i VARCHAR(30),
@@ -34,9 +40,9 @@ CREATE TABLE banks(
 );
 
 CREATE TABLE transactions(
-    transaction_id INT,
+    transaction_id SERIAL,
     amount DECIMAL(10,2),
-    DATEOfTransaction DATE,
+    DATEOfTransaction VARCHAR,
     modeOfTransaction VARCHAR(30),
     typeOfTransaction VARCHAR(30),
     i_id INT,
@@ -292,6 +298,9 @@ BEGIN
 
                 PERFORM updateSellerHoldings(sellerid, stockid, sellquantitycompute);
 
+                --update margin
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * buyquantity where i_id = buyerid;
+
                 if(stockheld = 'true') THEN
                     UPDATE holdsStocks SET quantity = quantity + buyquantity WHERE s_id = stockid and i_id = buyerid;
                 ELSE
@@ -308,6 +317,9 @@ BEGIN
                 raise notice 'buy quantity: %', buyquantity;
                 PERFORM updateSellerHoldings(sellerid, stockid, buyquantity);
 
+                --update margin
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * buyquantity where i_id = buyerid;
+
                 -- for the buyer
                 if(stockheld = 'true') THEN
                     UPDATE holdsStocks SET quantity = quantity + buyquantity WHERE s_id = stockid and i_id = buyerid;
@@ -323,6 +335,9 @@ BEGIN
                 
                 SELECT exists into stockheld(SELECT * FROM holdsStocks WHERE s_id=stockid and i_id = buyerid);
 
+                --update margin
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * sellquantitycompute where i_id = buyerid;
+
                 if(stockheld = 'true') THEN
                     UPDATE holdsStocks SET quantity = quantity + sellquantitycompute WHERE s_id = stockid and i_id = buyerid;
                 ELSE
@@ -333,7 +348,9 @@ BEGIN
         return_value := 1;
         
         ELSE
-            INSERT INTO buy_table(buyer_id, stock_id, buy_price, buy_quantity) values (buyerid, stockid, buyprice, buyquantity);     
+            INSERT INTO buy_table(buyer_id, stock_id, buy_price, buy_quantity) values (buyerid, stockid, buyprice, buyquantity); 
+            --update margin
+            UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * buyquantity where i_id = buyerid;    
             return_value := 2;
         END IF;    
 
@@ -391,6 +408,8 @@ begin
 
 
                 -- DELETE FROM buy_table where s_id = stockid and buy_price = sellprice;
+                --updating margin
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * sellquantity where i_id = sellerid;
                 
                 if(numberofstocksheld = sellquantity) THEN
                     DELETE FROM holdsStocks where s_id = stockid and i_id = sellerid;
@@ -409,6 +428,11 @@ begin
                 UPDATE buy_table set buy_quantity = buy_quantity - sellquantity where stock_id = stockid and buy_price = sellprice;
                 PERFORM updateBuyerHoldings(buyerid, stockid, sellquantity); -- as buyquantity is more
                 
+                
+                --updating margin
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * sellquantity where i_id = sellerid;
+
+
                 if(numberofstocksheld = sellquantity) THEN
                     DELETE FROM holdsStocks where s_id = stockid and i_id = sellerid;
                     
@@ -425,6 +449,10 @@ begin
             ELSE
                 DELETE from buy_table where stock_id = stockid and buyer_id = buyerid;
                 PERFORM updateBuyerHoldings(buyerid, stockid, buyquantitycompute);
+
+
+                --updating margin
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * buyquantitycompute where i_id = sellerid;
 
                 if(numberofstocksheld = sellquantity) THEN
                     DELETE FROM holdsStocks where s_id = stockid and i_id = sellerid;
@@ -451,6 +479,8 @@ begin
 
         ELSE -- no buyers
             INSERT into sell_table values (sellerid, stockid, sellprice, sellquantity );
+            --update margin
+            UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * sellquantity where i_id = sellerid;
             return_value := 2;
         END IF;
     

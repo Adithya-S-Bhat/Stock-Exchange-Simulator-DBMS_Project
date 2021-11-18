@@ -56,7 +56,14 @@ const LogInForm = () => {
     // ).then((response)=>{
     //     console.log(response.data); 
     // });
-      navigate("/home");
+    const obj={email};
+      Axios.post("http://localhost:8000/users/isBroker",obj).then((response)=>{
+        console.log(response.data)
+        if(response.data.length==0)
+          navigate("/home");
+        else
+          navigate("/brokerHome");
+      });
     }
     else{
       setError("Incorrect Credentials");

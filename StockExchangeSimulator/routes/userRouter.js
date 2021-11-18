@@ -16,6 +16,83 @@ client.on("connect", () => {
     console.log("Connected to database by admin");
 });
 
+router.post("/getUsername",async (req,res) => {
+    try{
+        let {Iid} = req.body;
+        
+        client.query("select * from investorsAndTraders where i_id=$1",[Iid],(err,response)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).send(response.rows[0]);
+            }});
+        }catch (error) {
+            res.status(500).send(error);
+        }
+    });
+
+router.post("/transactionAdd",async (req,res) => {
+    try{
+        let {amount_add,today_date,modeAddSelected,type_of_trac,id} = req.body;
+        console.log(amount_add,today_date,modeAddSelected,type_of_trac,id);
+        client.query("INSERT INTO transactions(amount,dateoftransaction,modeoftransaction,typeoftransaction,i_id) VALUES($1,$2,$3,$4,$5)",[amount_add,today_date,modeAddSelected,type_of_trac,id], (err,response)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).send({"insertion":"OK"});
+            }});
+        client.query("UPDATE investorsAndTraders SET marginavailable=marginavailable+$1 where i_id=$2",[amount_add,id],(err,response2)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).send({"updation":"OK"});
+            }});
+    }catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.post("/transactionWithdraw",async (req,res) => {
+    try{
+        let {amount_withdraw,dd,modeWithdrawSelected,type_of_trac,id} = req.body;
+        console.log(amount_withdraw,dd,modeWithdrawSelected,type_of_trac,id);
+        client.query("INSERT INTO transactions(amount,dateoftransaction,modeoftransaction,typeoftransaction,i_id) VALUES($1,$2,$3,$4,$5)",[amount_add,today_date,modeAddSelected,type_of_trac,id], (err,response)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).send({"insertion":"OK"});
+            }});
+        client.query("UPDATE investorsAndTraders SET marginavailable=marginavailable-$1 where i_id=$2",[amount_withdraw,id],(err,response2)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).send({"updation":"OK"});
+            }});
+    }catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
+router.post("/getUsersListForBroker",async (req,res) => {
+    try{
+        let {id} = req.body;
+        console.log(id);
+        client.query("select * from investorsAndTraders where broker_id=$1",[id], (err,response)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(response.rows);
+                return res.status(200).send(response.rows);
+            }
+        });
+    }catch (error) {
+            res.status(500).send(error);
+        }
+    });
+
+
 router.post("/getFunds",async (req,res) => {
     try{
         let {id} = req.body;
@@ -209,10 +286,33 @@ router.get("/getBrokers",async (req,res)=>{
     }
 });
 
-router.post("/buyStock",async(req,res)=>{
-    let {sid,userid,price,quantity}=req.body;
+// router.post("/buyStock",async(req,res)=>{
+//     console.log(req.body);
+//     let id = req.body.user_id;
+//     let sid = req.body.sid;
+//     let price = parseInt(req.body.price);
+//     let quantity = parseInt(req.body.quantity);
+//     try{
+//         client.query("select buy($1,$2,$3,$4)",[id,sid,price,quantity],async(err,response)=>{
+//             if(err){
+//                 console.log(err);
+//             }
+//             else{
+//                 console.log(response.rows);
+//                 res.status(200).send(response.rows);
+//             }
+//         })
+//     }
+//     catch(error){
+//         res.status(500).send(error);
+//     }
+// });
+
+router.post("/getUsername",async(req,res)=>{
+    
+    console.log(req.body)
     try{
-        client.query("select * from buy($1,$2,$3,$4)",[userid,sid,price,quantity],async(err,response)=>{
+        client.query("select * from investorsAndTraders where i_id=$1",[req.body.id],async(err,response)=>{
             if(err){
                 console.log(err);
             }
@@ -227,7 +327,58 @@ router.post("/buyStock",async(req,res)=>{
     }
 });
 
-router.post("/getBuyableStocks",async (req,res)=>{
+router.post("/addStock",async(req,res)=>{
+    console.log(req.body);
+    let id = req.body.investorID;
+    let sid = req.body.buySid;
+    let price = req.body.addPrice;
+    let quantity = req.body.addQuantity;
+    try{
+        client.query("select buy($1,$2,$3,$4)",[id,sid,price,quantity],async(err,response)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(response.rows);
+                res.status(200).send(response.rows);
+            }
+        })
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+});
+
+
+
+
+router.post("/exitStock",async(req,res)=>{
+    console.log(req.body);
+    // let {userid,sid,price,quantity}=req.body;
+    let id = req.body.investorID;
+    let sid = req.body.exitSid;
+    let price = parseInt(req.body.exitPrice);
+    let quantity = parseInt(req.body.exitQuantity);
+    
+    try{
+        client.query("select sell($1,$2,$3,$4)",[id,sid,price,quantity],async(err,response)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(response.rows);
+                res.status(200).send(response.rows);
+            }
+        })
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+});
+
+
+
+router.post("/getSellTable",async (req,res)=>{
     let {id}=req.body;
     try{
         client.query("select * from sell_table where stock_id=$1",[id],async(err,response)=>{
@@ -235,7 +386,7 @@ router.post("/getBuyableStocks",async (req,res)=>{
                 console.log(err);
             }
             else{
-                console.log(response.rows);
+                // console.log(response.rows);
                 res.status(200).send(response.rows);
             }
         })
@@ -245,5 +396,56 @@ router.post("/getBuyableStocks",async (req,res)=>{
     }
 });
 
+
+router.post("/getBuyTable",async (req,res)=>{
+    let {id}=req.body;
+    try{
+        client.query("select * from buy_table where stock_id=$1",[id],async(err,response)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                // console.log(response.rows);
+                res.status(200).send(response.rows);
+            }
+        })
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+});
+
+router.post("/isBroker",async (req,res)=>{
+    let {email}=req.body;
+    try{
+        client.query("select isbroker from users where username=$1 and isbroker='TRUE'",[email],async(err,response)=>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(response.rows);
+                res.status(200).send(response.rows);
+            }
+        });
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+});
+
+router.get("/getMarketValue",async (req,res)=>{
+    try{
+        client.query("select dt,totalvalue from marketvalue",async(err,response)=>{
+            if(err)
+                console.log(err);
+            else{
+                res.status(200).send(response.rows);
+            }
+        });
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+});
 
 module.exports = router;
