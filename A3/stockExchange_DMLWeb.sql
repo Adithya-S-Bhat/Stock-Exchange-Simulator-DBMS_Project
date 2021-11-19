@@ -55,49 +55,57 @@ INSERT INTO stocks VALUES(
     'Tata Motors',
     3012.34,
     9000000,
-    'Large Cap'
+    'Large Cap',
+    0
 ),(
     20,
     'JK Lakshmi Cement',
     976.66,
     250000,
-    'Small Cap'
+    'Small Cap',
+    0
 ),(
     30,
     'Cred Inc.',
     1784.89,
     897000,
-    'Mid Cap'
+    'Mid Cap',
+    0
 ),(
     40,
     'Reliance',
     2620.00,
     134110,
-    'Large Cap'
+    'Large Cap',
+    0
 ),(
     50,
     'Hindustan Uniliver',
     2459.00,
     452881,
-    'Large Cap'
+    'Large Cap',
+    0
 ),(
     60,
     'Britania',
     3734.42,
     765921,
-    'Large Cap'
+    'Large Cap',
+    0
 ),(
     70,
     'Sun Pharma',
     80.10,
     1300274,
-    'Mid Cap'
+    'Mid Cap',
+    0
 ),(
     80,
     'TCS',
     9653.67,
     861002,
-    'Large Cap'
+    'Large Cap',
+    0
 );
 
 INSERT INTO mutualFunds VALUES(

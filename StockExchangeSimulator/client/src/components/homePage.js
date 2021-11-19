@@ -143,7 +143,8 @@ export default function HomePage(){
                         //console.log(record)
                         <ListItem button key={record.s_id} onClick={()=>handleClickOpen(record.s_id)}>
                             <ListItemText primary={record.companyname} style={{width:"10px"}}/>
-                            <ListItemText primary={record.currentvalue} style={{direction:"rtl"}} />
+                            {record.difference>=0?<ListItemText primary={'(+'+record.difference+')'+record.currentvalue} style={{direction:"rtl",color:"#62fcaf"}}/>
+                            :<ListItemText primary={'('+record.difference+')'+record.currentvalue} style={{direction:"rtl",color:"red"}}/>}
                             <ListItemText primary={record.typeofstock} style={{direction:"rtl"}} />
                             <Button variant="contained" style={{backgroundColor:"green",color:"white"}} onClick={(e)=>{e.preventDefault()}}>Buy</Button>
                 </ListItem>

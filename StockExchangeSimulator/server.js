@@ -59,9 +59,9 @@ function UpdateStocks(){
             console.log(err);
         } else {
             for (let i=0; i<response.rows.length; i++){
-                let chance = (Math.random()) *20 - 10;
+                let chance = (Math.random()) *200 - 100;
 		        let price = chance/10; 
-                client2.query("UPDATE stocks set currentValue=currentValue+$2 where s_id=$1",[response.rows[i].s_id,price], (err,response2)=>{
+                client2.query("UPDATE stocks set currentValue=currentValue+$2,difference=$2 where s_id=$1",[response.rows[i].s_id,price], (err,response2)=>{
                     if (err) {
                         console.log("error");
                     } else {

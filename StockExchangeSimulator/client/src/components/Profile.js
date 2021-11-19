@@ -28,7 +28,6 @@ export default function Profile(){
     const [openExit, setOpenExit] = React.useState(false);
     const [buyTable,setBuyTable]=useState([]);
     const [sellTable,setSellTable]=useState([]);
-    const [marketValue,setMarketValue]=useState([]);
     const [exitSid, SetExitSid] = React.useState(0);
     const [buySid, SetBuySid] = React.useState(0);
 
@@ -120,21 +119,20 @@ export default function Profile(){
       });
     }
   
-    const initialisation=async()=>{
+    const initialisation=()=>{
         
-      await Axios.post(
+      Axios.post(
           "http://localhost:8000/users/getStockHoldings",
           ID
       ).then((response)=>{
           console.log(response.data)
           setStockHoldings(response.data)
-          Axios.get("http://localhost:8000/users/getMarketValue").then((response)=>{
-            setMarketValue(response.data);
-            marketValue.map((record)=>(valueList.push([record.dt,parseInt(record.totalvalue)])));
-            valueList.unshift([{ type: 'string', label: 'Time' },{label:'Stock Market Value',type:'number'}])
-            setMarketValueList(valueList);
-            console.log(valueList)
-          });
+      });
+      Axios.get("http://localhost:8000/users/getMarketValue").then((response)=>{
+        response.data.map((record)=>(valueList.push([record.dt.slice(11,23),parseInt(record.totalvalue)])));
+        valueList.unshift([{ type: 'string', label: 'Time' },{label:'Stock Market Value',type:'number'}])
+        setMarketValueList(valueList);
+        console.log(valueList)
       });
     }
     useEffect(()=>{
@@ -142,6 +140,33 @@ export default function Profile(){
     },[]);
     return (
         <div className="Profile">
+        <center>
+        <Typography variant="h5">Stock Market Trends</Typography>
+        <br/>
+        {marketValueList.length!=0?
+        <Chart
+        width={'600px'}
+        height={'400px'}
+        chartType="LineChart"
+        loader={<div>Stock Market Chart</div>}
+        data={
+          marketValueList
+        }
+        options={{
+          hAxis: {
+            title: 'Time',
+          },
+          backgroundColor: {
+            fill: '#c39ea0',//'#fbf6a7',
+            fillOpacity: 0.8},
+          color:"white",
+          vAxis: {
+            title: 'Stock Market Value (in ₹)',
+          },
+        }}
+      />:<span></span>}
+      </center>
+      <br/><br/>
             <Typography variant="h5">My Holdings</Typography>
             <br/>
             <div className={classes.root}>
@@ -282,26 +307,7 @@ export default function Profile(){
                 </DialogActions>
             </Dialog>
             <br/>
-            <center>
-            {marketValueList.length!=1?
-            <Chart
-            width={'600px'}
-            height={'400px'}
-            chartType="LineChart"
-            loader={<div>Stock Market Chart</div>}
-            data={
-              marketValueList
-            }
-            options={{
-              hAxis: {
-                title: 'Time',
-              },
-              vAxis: {
-                title: 'Stock Market Value',
-              },
-            }}
-          />:<span></span>}
-          </center>
+            <br/>
             
         </div>
         

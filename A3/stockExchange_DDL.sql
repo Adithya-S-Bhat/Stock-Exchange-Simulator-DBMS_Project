@@ -86,6 +86,7 @@ CREATE TABLE stocks(
     currentValue DECIMAL(10,2),
     totalQuantity VARCHAR(30),
     typeOfStock VARCHAR(10), 
+    difference DECIMAL(10,2),
     primary key(s_id)
 );
 
