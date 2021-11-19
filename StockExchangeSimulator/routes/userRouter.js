@@ -33,19 +33,19 @@ router.post("/getUsername",async (req,res) => {
 
 router.post("/transactionAdd",async (req,res) => {
     try{
-        let {amount_add,today_date,modeAddSelected,type_of_trac,id} = req.body;
-        console.log(amount_add,today_date,modeAddSelected,type_of_trac,id);
-        client.query("INSERT INTO transactions(amount,dateoftransaction,modeoftransaction,typeoftransaction,i_id) VALUES($1,$2,$3,$4,$5)",[amount_add,today_date,modeAddSelected,type_of_trac,id], (err,response)=>{
+        let {amount,today_date,modeAddSelected,type_of_trac,id} = req.body;
+        console.log(amount,today_date,modeAddSelected,type_of_trac,id);
+        client.query("INSERT INTO transactions(amount,dateoftransaction,modeoftransaction,typeoftransaction,i_id) VALUES($1,$2,$3,$4,$5)",[amount,today_date,modeAddSelected,type_of_trac,id], (err,response)=>{
             if (err) {
                 console.log(err);
             } else {
-                return res.status(200).send({"insertion":"OK"});
-            }});
-        client.query("UPDATE investorsAndTraders SET marginavailable=marginavailable+$1 where i_id=$2",[amount_add,id],(err,response2)=>{
-            if (err) {
-                console.log(err);
-            } else {
-                return res.status(200).send({"updation":"OK"});
+                client.query("UPDATE investorsAndTraders SET marginavailable=marginavailable+$1 where i_id=$2",[amount,id],(err,response2)=>{
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.status(200).send({"updation":"OK"});
+                    }});
+                    //res.status(200).send({"insertion":"OK"});
             }});
     }catch (error) {
         res.status(500).send(error);
@@ -54,19 +54,18 @@ router.post("/transactionAdd",async (req,res) => {
 
 router.post("/transactionWithdraw",async (req,res) => {
     try{
-        let {amount_withdraw,dd,modeWithdrawSelected,type_of_trac,id} = req.body;
-        console.log(amount_withdraw,dd,modeWithdrawSelected,type_of_trac,id);
-        client.query("INSERT INTO transactions(amount,dateoftransaction,modeoftransaction,typeoftransaction,i_id) VALUES($1,$2,$3,$4,$5)",[amount_add,today_date,modeAddSelected,type_of_trac,id], (err,response)=>{
+        let {amount,dd,modeWithdrawSelected,type_of_trac,id} = req.body;
+        console.log(amount,dd,modeWithdrawSelected,type_of_trac,id);
+        client.query("INSERT INTO transactions(amount,dateoftransaction,modeoftransaction,typeoftransaction,i_id) VALUES($1,$2,$3,$4,$5)",[amount,dd,modeWithdrawSelected,type_of_trac,id], (err,response)=>{
             if (err) {
                 console.log(err);
             } else {
-                return res.status(200).send({"insertion":"OK"});
-            }});
-        client.query("UPDATE investorsAndTraders SET marginavailable=marginavailable-$1 where i_id=$2",[amount_withdraw,id],(err,response2)=>{
-            if (err) {
-                console.log(err);
-            } else {
-                return res.status(200).send({"updation":"OK"});
+                client.query("UPDATE investorsAndTraders SET marginavailable=marginavailable-$1 where i_id=$2",[amount,id],(err,response2)=>{
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.status(200).send({"updation":"OK"});
+                    }});
             }});
     }catch (error) {
         res.status(500).send(error);

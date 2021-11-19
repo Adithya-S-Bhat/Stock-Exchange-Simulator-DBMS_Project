@@ -91,51 +91,53 @@ export default function HomePage(){
     }
 
     const initialisation=async()=>{
-
-        await Axios.post(
-            "http://localhost:8000/users/getUserId",
-            userName
-        ).then((response)=>{
-            localStorage.setItem("id", response.data.id);
-            console.log(response.data.id); 
-        });
-        
         //authenticate
-        // var returnObjName= JSON.parse(localStorage.getItem('id'));
-        // if(!(returnObjName && Object.keys(returnObjName).length > 0)){
-        //      navigate("/")
-        // }
-        
-        let Iid= localStorage.getItem("id");
-        //let id_int = Number(id)
-        const user_id = {Iid};
-        await Axios.post(
-            "http://localhost:8000/users/getUsername",
-            user_id
-        ).then((response)=>{
-            console.log("user name " + response.data.name_i)
-            setUserNAME(response.data.name_i);
-        })
+        console.log("id"+localStorage.getItem('id'))
+        if(localStorage.getItem('username')===null){
+             navigate("/")
+        }
+        else{
+            await Axios.post(
+                "http://localhost:8000/users/getUserId",
+                userName
+            ).then((response)=>{
+                localStorage.setItem("id", response.data.id);
+                console.log(response.data.id); 
+            });
+            
+            let Iid= localStorage.getItem("id");
+            //let id_int = Number(id)
+            const user_id = {Iid};
+            await Axios.post(
+                "http://localhost:8000/users/getUsername",
+                user_id
+            ).then((response)=>{
+                console.log("user name " + response.data.name_i)
+                setUserNAME(response.data.name_i);
+            })
 
-        await Axios.post(
-            "http://localhost:8000/users/getAllStocks",
-        ).then((response)=>{
-            //console.log(response.data)
-            setStocks(response.data)
-        });
+            await Axios.post(
+                "http://localhost:8000/users/getAllStocks",
+            ).then((response)=>{
+                //console.log(response.data)
+                setStocks(response.data)
+            });
+        }
     }
     useEffect(()=>{
         initialisation();
     },[]);
     return (
         <div className="HomePage">
-            <h2 style={{"text-align": "left"}}>Welcome {userNAME}!</h2>
-            <h3>Watchlist</h3>
+            <Typography variant="h5" style={{"text-align": "left"}}>Welcome {userNAME}!</Typography>
+            <br/>
+            <Typography variant="h5">Stocks List</Typography>
+            <br/>
             <div className={classes.root}>
                 <ListItem style={{backgroundColor:"black"}}>
                     <ListItemText primary="Stock Name" style={{width:"10px",fontWeight:"bolder"}}/>
-                    <ListItemText primary="Price" style={{direction:"rtl",width:"65px",fontWeight:"bolder"}} />
-                    <ListItemText primary="Type" style={{direction:"rtl",width:"105px",fontWeight:"bolder"}} />
+                    <ListItemText primary="Price" style={{direction:"rtl",width:"65px"}} />
+                    <ListItemText primary="Type" style={{direction:"rtl",width:"105px"}} />
                 </ListItem>
                 {stocks.map((record) => (
                         //console.log(record)

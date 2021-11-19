@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { makeStyles, Typography, Card} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -75,6 +75,9 @@ const LogInForm = () => {
     navigate("/signup");
   };
 
+  useEffect(()=>{
+    localStorage.clear();
+  },[]);
   return (
     <div className="login">
       <Card variant="outlined" style={{width:"30%",marginLeft:"34%",marginTop:"8%"}}>

@@ -142,7 +142,8 @@ export default function Profile(){
     },[]);
     return (
         <div className="Profile">
-            <h4>Holdings</h4>
+            <Typography variant="h5">My Holdings</Typography>
+            <br/>
             <div className={classes.root}>
             <ListItem style={{backgroundColor:"black"}}>
                 <ListItemText primary="Stock Name" style={{width:"10px",fontWeight:"bolder"}}/>

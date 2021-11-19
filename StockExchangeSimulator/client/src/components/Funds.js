@@ -72,11 +72,26 @@ export default function Funds(){
         let type_of_trac = "Credit"
         let id = localStorage.getItem("id");
         console.log(modeAddSelected);
-        const add_funds = {amount_add,today_date,modeAddSelected,type_of_trac,id};
+        let amount = parseInt(amount_add)
+
+        const add_funds = {amount,today_date,modeAddSelected,type_of_trac,id};
         Axios.post(
             "http://localhost:8000/users/transactionAdd",
             add_funds
-        );}
+        ).then((response)=>{
+            if(response.data.length!=0){
+                setOpen_Add(false);
+                let id = localStorage.getItem("id");
+                let user_id = {id};
+                Axios.post(
+                    "http://localhost:8000/users/getFunds",
+                    user_id
+                ).then((response)=>{
+                    setMargin(response.data.margin);
+                });
+            }
+        });
+    }
 
     const handleWithdrawSubmit = e => {
         e.preventDefault();
@@ -95,11 +110,25 @@ export default function Funds(){
         let today_date = dd+'-'+mm+'-'+yyyy;
         let type_of_trac = "Withdraw"
         let id = localStorage.getItem("id");
-        const withdraw_funds = {amount_withdraw,dd,modeWithdrawSelected,type_of_trac,id};
+        let amount=parseFloat(amount_withdraw);
+        const withdraw_funds = {amount,dd,modeWithdrawSelected,type_of_trac,id};
         Axios.post(
             "http://localhost:8000/users/transactionWithdraw",
             withdraw_funds
-        );}
+        ).then((response)=>{
+            if(response.data.length!=0){
+                setOpen_withdraw(false);
+                let id = localStorage.getItem("id");
+                let user_id = {id};
+                Axios.post(
+                    "http://localhost:8000/users/getFunds",
+                    user_id
+                ).then((response)=>{
+                    setMargin(response.data.margin);
+                });
+            }
+        });
+    }
 
     useEffect(()=>{
         initialisation();

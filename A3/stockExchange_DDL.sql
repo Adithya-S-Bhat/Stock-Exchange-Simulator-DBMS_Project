@@ -299,7 +299,7 @@ BEGIN
                 PERFORM updateSellerHoldings(sellerid, stockid, sellquantitycompute);
 
                 --update margin
-                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * buyquantity where i_id = buyerid;
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - buyprice * buyquantity where i_id = buyerid;
 
                 if(stockheld = 'true') THEN
                     UPDATE holdsStocks SET quantity = quantity + buyquantity WHERE s_id = stockid and i_id = buyerid;
@@ -318,7 +318,7 @@ BEGIN
                 PERFORM updateSellerHoldings(sellerid, stockid, buyquantity);
 
                 --update margin
-                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * buyquantity where i_id = buyerid;
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - buyprice * buyquantity where i_id = buyerid;
 
                 -- for the buyer
                 if(stockheld = 'true') THEN
@@ -336,7 +336,7 @@ BEGIN
                 SELECT exists into stockheld(SELECT * FROM holdsStocks WHERE s_id=stockid and i_id = buyerid);
 
                 --update margin
-                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * sellquantitycompute where i_id = buyerid;
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable - buyprice * sellquantitycompute where i_id = buyerid;
 
                 if(stockheld = 'true') THEN
                     UPDATE holdsStocks SET quantity = quantity + sellquantitycompute WHERE s_id = stockid and i_id = buyerid;
@@ -350,7 +350,7 @@ BEGIN
         ELSE
             INSERT INTO buy_table(buyer_id, stock_id, buy_price, buy_quantity) values (buyerid, stockid, buyprice, buyquantity); 
             --update margin
-            UPDATE investorsAndTraders SET marginAvailable = marginAvailable - stock_value * buyquantity where i_id = buyerid;    
+            UPDATE investorsAndTraders SET marginAvailable = marginAvailable - buyprice * buyquantity where i_id = buyerid;    
             return_value := 2;
         END IF;    
 
@@ -409,7 +409,7 @@ begin
 
                 -- DELETE FROM buy_table where s_id = stockid and buy_price = sellprice;
                 --updating margin
-                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * sellquantity where i_id = sellerid;
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + sellprice * sellquantity where i_id = sellerid;
                 
                 if(numberofstocksheld = sellquantity) THEN
                     DELETE FROM holdsStocks where s_id = stockid and i_id = sellerid;
@@ -430,7 +430,7 @@ begin
                 
                 
                 --updating margin
-                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * sellquantity where i_id = sellerid;
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + sellprice * sellquantity where i_id = sellerid;
 
 
                 if(numberofstocksheld = sellquantity) THEN
@@ -452,7 +452,7 @@ begin
 
 
                 --updating margin
-                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * buyquantitycompute where i_id = sellerid;
+                UPDATE investorsAndTraders SET marginAvailable = marginAvailable + sellprice * buyquantitycompute where i_id = sellerid;
 
                 if(numberofstocksheld = sellquantity) THEN
                     DELETE FROM holdsStocks where s_id = stockid and i_id = sellerid;
@@ -480,7 +480,7 @@ begin
         ELSE -- no buyers
             INSERT into sell_table values (sellerid, stockid, sellprice, sellquantity );
             --update margin
-            UPDATE investorsAndTraders SET marginAvailable = marginAvailable + stock_value * sellquantity where i_id = sellerid;
+            UPDATE investorsAndTraders SET marginAvailable = marginAvailable + sellprice * sellquantity where i_id = sellerid;
             return_value := 2;
         END IF;
     

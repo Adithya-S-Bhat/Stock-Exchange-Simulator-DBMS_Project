@@ -10,7 +10,7 @@ export default function AboutUs(){
 Ultimately, the user's goal should be to trade the stock as intelligently as possible in order to own as much money as they can.
 In spite of this goal, the user should pay attention to what he or she is effecting with his or her investment, especially with morally questionable companies.
 
-The price of all stocks change in real time and the the category of a stock determines how volatile its price is.
+The price of all stocks change in real time and the category of a stock determines how volatile its price is.
 This virtual share market enables the participants to trade, buy, sell stocks and showcase their rationality, their mettle against competitive decision making under pressure. The full time active virtual market will be a platform to showcase your inferential, pressure-handling capability.
 There are various quests that offer an incentive to buy certain stocks or stock categories.
 The simulation can be terminated at any time and then restarted with the same status.

@@ -23,6 +23,7 @@ class App extends Component {
               <Route exact path="/investorForm" element={<InvestorForm/>}/>
               <Route exact path="/brokerForm" element={<BrokerForm/>}/>
               <Route exact path="/brokerView" element={<BrokerView/>}/>
+              <Route exact path="/logout" element={<LogInForm/>}/>
 
           </Routes>
           </Router>
