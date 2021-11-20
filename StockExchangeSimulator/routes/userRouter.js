@@ -109,6 +109,41 @@ router.post("/getFunds",async (req,res) => {
     }
 });
 
+router.post("/getSellOrders",async (req,res) => {
+    try{
+        let {id} = req.body;
+        console.log(id);
+        client.query("select stocks.companyname, sell_table.sell_price, sell_table.sell_quantity from sell_table, stocks where sell_table.stock_id = stocks.s_id and seller_id=$1",[id], (err,response)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(response.rows);
+                res.status(200).send(response.rows);
+        }
+    });
+}catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.post("/getBuyOrders",async (req,res) => {
+    try{
+        let {id} = req.body;
+        console.log(id);
+        client.query("select stocks.companyname, buy_table.buy_price, buy_table.buy_quantity from buy_table, stocks where buy_table.stock_id = stocks.s_id and buyer_id=$1",[id], (err,response)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(response.rows);
+                res.status(200).send(response.rows);
+        }
+    });
+}catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 router.post("/getUserId",async (req,res) => {
     try{
         let {username} = req.body;

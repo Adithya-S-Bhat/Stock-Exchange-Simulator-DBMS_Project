@@ -25,9 +25,9 @@ client2.connect();
 client2.on("connect", () => {
     console.log("Connected to database through supervisor");
 });
-/*setInterval(function() {
-    UpdateStocks()
-}, 3000);*/
+// setInterval(function() {
+//     UpdateStocks()
+// }, 3000);
 
 const admin = new Client({
     host: 'localhost',

@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import ProfileIcon from '@material-ui/icons/AccountCircleOutlined';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Book from '@material-ui/icons/Book';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import LogoutIcon from '@material-ui/icons/ExitToAppOutlined';
@@ -36,6 +37,7 @@ import Profile from './components/Profile';
 import FooterComponent from './components/Footer'
 import Funds from './components/Funds'
 import AboutUs from './components/AboutUs'
+import Orders from './components/Orders'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -251,7 +253,8 @@ export default function Home(){
                     <Divider/>
                     <Tab label="My Profile" icon={<ProfileIcon/>} {...a11yProps(1)} />
                     <Tab label="Funds" icon={<AccountBalanceIcon/>} {...a11yProps(2)} />
-                    <Tab label="About Us" icon={<InfoIcon/>} {...a11yProps(3)} />
+                    <Tab label="Orders" icon={<Book/>} {...a11yProps(3)} />
+                    <Tab label="About Us" icon={<InfoIcon/>} {...a11yProps(4)} />
             </Tabs>
             </Drawer>
             <main className={classes.content}>
@@ -268,6 +271,9 @@ export default function Home(){
                 <Funds/>
             </TabPanel>
             <TabPanel value={value} index={4}>
+                <Orders/>
+            </TabPanel>
+            <TabPanel value={value} index={5}>
                 <AboutUs/>
             </TabPanel>
             <FooterComponent/>
