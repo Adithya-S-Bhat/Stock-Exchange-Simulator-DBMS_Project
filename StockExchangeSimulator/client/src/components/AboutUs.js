@@ -6,7 +6,7 @@ export default function AboutUs(){
             <h1>This is a Stockmarket Simulation.</h1>
 
 <div style={{"text-align": "justify","text-justify": "inter-word"}}>
-<p>At the start of the simulation the user has a capital of ₹10,000 that he can invest into various stocks. 
+<p>At the start of the simulation the user has a capital of ₹20,000 that he can invest into various stocks. 
 Ultimately, the user's goal should be to trade the stock as intelligently as possible in order to own as much money as they can.
 In spite of this goal, the user should pay attention to what he or she is effecting with his or her investment, especially with morally questionable companies.
 

@@ -102,7 +102,7 @@ INSERT INTO stocks VALUES(
 ),(
     80,
     'TCS',
-    9653.67,
+    6653.67,
     861002,
     'Large Cap',
     0
@@ -1117,3 +1117,43 @@ INSERT INTO phoneNumber VALUES(
     333,
     '080 44829716'
 );
+
+INSERT INTO users(username,password,isbroker) VALUES('abhi@gmail.com',crypt('1234',gen_salt('bf')),'f');
+INSERT INTO investorsAndTraders VALUES(
+    1,
+    'Abhishek',
+    '2001-04-25',
+    '449775290764',
+    '+91 9886542986',
+    '560019',
+    'Bengaluru',
+    'Karnataka',
+    100000.00,
+    55
+);
+INSERT INTO holdsStocks Values(
+    1,10,1000
+),(
+    1,20,800
+),(
+    1,30,900
+),(
+    1,40,400
+),(
+    1,50,600
+),(
+    1,60,1000
+),(
+    1,70,100
+),(
+    1,80,600
+);
+
+SELECT sell(1,10,3000,1000);
+SELECT sell(1,20,1000,800);
+SELECT sell(1,30,1750,900);
+SELECT sell(1,40,2650,400);
+SELECT sell(1,50,2500,600);
+SELECT sell(1,60,3750,1000);
+SELECT sell(1,70,85,100);
+SELECT sell(1,80,6500,600);

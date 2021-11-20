@@ -289,7 +289,7 @@ router.post("/investorForm",async (req,res)=>{
         let {userID,name,dob,aadhar,phone,pin,city,state,brokerSelected}=req.body;
         console.log(name,dob,aadhar,phone,pin,city,state);
         client.query("INSERT INTO investorsAndTraders(i_id,name_i,dob,aadharnumber,phonenumber,pincode,city,state_i,marginavailable,broker_id)\
-         values($1,$2,$3,$4,$5,$6,$7,$8,10000,$9)",[userID,name,dob,aadhar,phone,pin,city,state,brokerSelected],async(err,response)=>{
+         values($1,$2,$3,$4,$5,$6,$7,$8,20000,$9)",[userID,name,dob,aadhar,phone,pin,city,state,brokerSelected],async(err,response)=>{
             if (err) {
                 console.log(err);
             } else {
