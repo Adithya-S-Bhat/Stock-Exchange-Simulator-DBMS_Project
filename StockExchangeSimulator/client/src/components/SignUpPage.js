@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '300px',
+      width: '100%',
     },
     '& .MuiButtonBase-root': {
       margin: theme.spacing(2),
@@ -64,7 +64,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <Card variant="outlined" style={{width:"35%",marginLeft:"32%",marginTop:"6%"}}>
+    <Card variant="outlined" style={{width:"40%",marginLeft:"30%",marginTop:"6%"}}>
     <Typography variant="h4" style={{padding:"4%"}}>Sign Up</Typography>
     <form className={classes.root} onSubmit={handleSubmit}>
       {/*<TextField

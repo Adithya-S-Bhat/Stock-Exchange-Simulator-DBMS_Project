@@ -16,7 +16,6 @@ There are various quests that offer an incentive to buy certain stocks or stock 
 The simulation can be terminated at any time and then restarted with the same status.
 This work is strictly meant for 'Project' purposes and in no way does it mean any kind of conflicts with the companies listed in it.<br/>
 <br/>
-<center>Made with &nbsp;<span style={{color:"red"}}>❤</span> &nbsp; by Abhishek Aditya BS, Adithya MS and Abhiram Puranik</center>
 </p>
 </div>
 <div>

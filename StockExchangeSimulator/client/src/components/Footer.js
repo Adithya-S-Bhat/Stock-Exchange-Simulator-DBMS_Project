@@ -81,10 +81,12 @@ export default function StickyFooter() {
         <Container maxWidth="sm">
           <Typography variant="body1">
           <LinkedInIcon className='SocialIcons'/>&nbsp;&nbsp;&nbsp;&nbsp;
-            <GitHubIcon className='SocialIcons'/>&nbsp;&nbsp;&nbsp;&nbsp;
+          <Link href="//github.com/Adithya-S-Bhat/Stock-Exchange-Simulator-DBMS_Project" style={{color:"white"}} target='_blank'><GitHubIcon className='SocialIcons'/></Link>&nbsp;&nbsp;&nbsp;&nbsp;
             <FacebookIcon className="SocialIcons"/>&nbsp;&nbsp;&nbsp;&nbsp;
           </Typography>
           <Copyright />
+          <br/>
+          <Typography variant="body2" color="text-white">Made with &nbsp;<span style={{color:"red"}}>❤</span> &nbsp; by Abhishek Aditya BS, Adithya MS and Abhiram Puranik.</Typography>
         </Container>
         
       </Box>

@@ -176,7 +176,7 @@ export default function Profile(){
                 <ListItemText primary="Quantity" style={{direction:"rtl",width:"105px",fontWeight:"bolder"}} />
                 {/* <ListItemText primary="Add/Exit" style={{direction:"rtl",width:"105px",fontWeight:"bolder"}} /> */}
             </ListItem>
-            {stockHoldings.map((record) => ( 
+            {stockHoldings.length!=0?stockHoldings.map((record) => ( 
                 <ListItem key={record.s_id}>      
                   <ListItemText primary={record.companyname} style={{width:"10px"}}/>
                   <ListItemText primary={record.currentvalue} style={{direction:"rtl"}}/>              
@@ -185,7 +185,7 @@ export default function Profile(){
                   <Button variant="contained" style={{backgroundColor:"crimson",color:"white"}} onClick={(e) => {e.preventDefault(); handleClickOpenExit(record.s_id)}} >Exit</Button>
                 </ListItem>   
             )
-            )}
+            ):<Typography variant="subtitle1">Your Holdings will be displayed here</Typography>}
             </div>
             <Dialog open={openAdd} onClose={handleCloseAdd} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
               <DialogTitle id="alert-dialog-title">{"Add Stock"}</DialogTitle>

@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '300px',
+      width: '100%',
     },
     '& .MuiButtonBase-root': {
       margin: theme.spacing(2),
@@ -80,7 +80,7 @@ const LogInForm = () => {
   },[]);
   return (
     <div className="login">
-      <Card variant="outlined" style={{width:"30%",marginLeft:"34%",marginTop:"8%"}}>
+      <Card variant="outlined" style={{width:"40%",marginLeft:"30%",marginTop:"8%"}}>
         <Typography variant="h4" style={{padding:"4%"}}>Login</Typography>
         {error && (<ErrorNotice message={error} clearError={ ()=> setError(undefined)}/>)}
         <form className={classes.root} onSubmit={handleSubmit}>

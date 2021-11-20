@@ -130,7 +130,7 @@ export default function HomePage(){
     return (
         <div className="HomePage">
             <Typography variant="h5" style={{"text-align": "left"}}>Welcome {userNAME}!</Typography>
-            <br/>
+            <br/><br/>
             <Typography variant="h5">Stocks List</Typography>
             <br/>
             <div className={classes.root}>
@@ -173,30 +173,31 @@ export default function HomePage(){
                         </Button>
                     </form>
                     <DialogContentText id="alert-dialog-description">                      
-                        {buyTable.length!==0?<Typography variant="h6">Buyers</Typography>:<span></span>}
-                        {buyTable.length!==0?<ListItem style={{backgroundColor:"black",fontWeight:"bolder"}}>
+                        <Typography variant="h6">Buyers</Typography>
+                        {<ListItem style={{backgroundColor:"black",fontWeight:"bolder"}}>
                             <ListItemText primary="Stock Price"/>
                             <ListItemText primary="Quantity" style={{direction:"rtl"}} />
-                        </ListItem>:<span></span>}
-                        {buyTable.map((record) => (
+                        </ListItem>}
+                        {buyTable.length!==0?buyTable.map((record) => (
                                 <ListItem button key={record.buyer_id}>
                                     <ListItemText primary={record.buy_price}/>
                                     <ListItemText primary={record.buy_quantity} style={{direction:"rtl"}} />
                                 </ListItem>
-                        ))}
+                        )):<Typography variant="subtitle1" style={{backgroundColor:"GrayText",padding:"1%"}}>No Buyers Available currently</Typography>}
                     </DialogContentText>
+                    <br/>
                     <DialogContentText id="alert-dialog-description">                      
-                        {sellTable.length!==0?<Typography variant="h6">Sellers</Typography>:<span></span>}
-                        {sellTable.length!==0?<ListItem style={{backgroundColor:"black",fontWeight:"bolder"}}>
+                        <Typography variant="h6">Sellers</Typography>
+                        <ListItem style={{backgroundColor:"black",fontWeight:"bolder"}}>
                             <ListItemText primary="Stock Price"/>
                             <ListItemText primary="Quantity" style={{direction:"rtl"}} />
-                        </ListItem>:<span></span>}
-                        {sellTable.map((record) => (
+                        </ListItem>
+                        {sellTable.length!==0?sellTable.map((record) => (
                                 <ListItem button key={record.seller_id}>
                                     <ListItemText primary={record.sell_price}/>
                                     <ListItemText primary={record.sell_quantity} style={{direction:"rtl"}} />
                                 </ListItem>
-                        ))}
+                        )):<Typography variant="subtitle1" style={{backgroundColor:"GrayText",padding:"1%"}}>No Sellers Available currently</Typography>}
                     </DialogContentText>
                     
                 </DialogContent>

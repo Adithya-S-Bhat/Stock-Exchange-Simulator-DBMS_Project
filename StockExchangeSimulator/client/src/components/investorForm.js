@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
-        width: '300px',
+        width: '100%',
       },
       '& .MuiButtonBase-root': {
         margin: theme.spacing(2),
@@ -87,7 +87,7 @@ const InvestorForm =() => {
         // });
     }
     return (   
-        <Card variant="outlined" style={{width:"38%",marginLeft:"30%",marginTop:"1%"}}>
+        <Card variant="outlined" style={{width:"40%",marginLeft:"30%",marginTop:"1%"}}>
         <Typography variant="h5" style={{padding:"4%"}}>Investor Details</Typography>
         <form className={classes.root} onSubmit={handleSubmit}>
             <TextField
@@ -137,7 +137,7 @@ const InvestorForm =() => {
             required
             value={state}
             onChange={e => setState(e.target.value)}/>
-            <FormControl variant="filled" style={{width:"302px",padding:"2px"}}>
+            <FormControl variant="filled" style={{width:"100%",padding:"2px"}}>
             <InputLabel id="select">Select Broker</InputLabel>
             <Select
             labelId="demo-simple-select-label"
