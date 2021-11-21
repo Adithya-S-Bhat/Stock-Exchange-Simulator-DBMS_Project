@@ -54,7 +54,7 @@ const BrokerForm = () => {
           "http://localhost:8000/users/brokerform",
             newBroker
     ).then((response)=>{
-          navigate("/home"); 
+          navigate("/login"); 
     });
   });
 }
