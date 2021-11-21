@@ -37,7 +37,6 @@ export default function Funds(){
             user_id
         ).then((response)=>{
             setMargin(response.data.margin);
-            console.log(response.data.margin)
         });
 
     }
@@ -71,7 +70,6 @@ export default function Funds(){
         let today_date = dd+'-'+mm+'-'+yyyy;
         let type_of_trac = "Credit"
         let id = localStorage.getItem("id");
-        console.log(modeAddSelected);
         let amount = parseInt(amount_add)
 
         const add_funds = {amount,today_date,modeAddSelected,type_of_trac,id};
@@ -190,7 +188,7 @@ export default function Funds(){
                 id="name"
                 label="Enter the amount"
                 type="number"
-                InputProps={{ inputProps: { min: 1, max: {margin} } }}
+                InputProps={{ inputProps: { min: 1, max: margin } }}
                 onChange={e => setAmountWithdraw(e.target.value)}
                 fullWidth
                 variant="standard"

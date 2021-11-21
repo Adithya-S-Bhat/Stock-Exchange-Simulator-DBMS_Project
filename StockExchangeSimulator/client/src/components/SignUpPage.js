@@ -43,7 +43,6 @@ const SignUpPage = () => {
         email, password, user
     };
     localStorage.setItem("username", email);
-    console.log(email, password,user);
      Axios.post(
         "http://localhost:8000/users/signup",
         newUser

@@ -54,7 +54,6 @@ const InvestorForm =() => {
     useEffect(()=>{
         getBrokers();
     },[]);
-    console.log(res);
 
     const handleSubmit = e => {
         e.preventDefault();

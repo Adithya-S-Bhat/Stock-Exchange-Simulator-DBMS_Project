@@ -35,7 +35,6 @@ const LogInForm = () => {
   
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(email, password);
     const newUser = {
       email, password
   };
@@ -44,7 +43,6 @@ const LogInForm = () => {
       "http://localhost:8000/users/login",
       newUser
   ).then((response)=>{
-    console.log(response.data.code)
     if(response.data.code===1){
       localStorage.setItem("username", email);
     //   let username = localStorage.getItem("username")
@@ -58,7 +56,6 @@ const LogInForm = () => {
     // });
     const obj={email};
       Axios.post("http://localhost:8000/users/isBroker",obj).then((response)=>{
-        console.log(response.data)
         if(response.data.length==0)
           navigate("/home");
         else

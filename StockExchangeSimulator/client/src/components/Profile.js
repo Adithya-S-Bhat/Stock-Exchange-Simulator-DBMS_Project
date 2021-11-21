@@ -43,7 +43,6 @@ export default function Profile(){
       const obj={id};
       SetBuySid(id);
       Axios.post("http://localhost:8000/users/getSellTable",obj).then((response)=>{
-          console.log(response.data)
           setSellTable(response.data);
           // setSid(id);
           setOpenAdd(true);
@@ -52,7 +51,6 @@ export default function Profile(){
     
 
       Axios.post("http://localhost:8000/users/getBuyTable",obj).then((response)=>{
-          console.log(response.data)
           setBuyTable(response.data);
           // setSid(id);
           setOpenAdd(true);
@@ -64,7 +62,6 @@ export default function Profile(){
       const obj={id};
       SetExitSid(id);
       Axios.post("http://localhost:8000/users/getSellTable",obj).then((response)=>{
-          console.log(response.data)
           setSellTable(response.data);
           // setSid(id);
           setOpenExit(true);
@@ -73,7 +70,6 @@ export default function Profile(){
     
 
       Axios.post("http://localhost:8000/users/getBuyTable",obj).then((response)=>{
-          console.log(response.data)
           setBuyTable(response.data);
           // setSid(id);
           setOpenExit(true);
@@ -99,14 +95,12 @@ export default function Profile(){
         "http://localhost:8000/users/addStock",
         obj
       ).then((response)=>{
-          console.log(response.data)
       });
       
     }
 
     const handleExit = () => {
       let investorID = ID.id;
-      console.log(investorID)
       const obj = {
         investorID,exitSid,exitPrice,exitQuantity
       };
@@ -115,7 +109,6 @@ export default function Profile(){
         "http://localhost:8000/users/exitStock",
         obj
       ).then((response)=>{
-          console.log(response.data)
       });
     }
   
@@ -125,14 +118,12 @@ export default function Profile(){
           "http://localhost:8000/users/getStockHoldings",
           ID
       ).then((response)=>{
-          console.log(response.data)
           setStockHoldings(response.data)
       });
       Axios.get("http://localhost:8000/users/getMarketValue").then((response)=>{
-        response.data.map((record)=>(valueList.push([record.dt.slice(11,23),parseInt(record.totalvalue)])));
+        response.data.map((record)=>(valueList.push([record.t.slice(0,12),parseInt(record.totalvalue)])));
         valueList.unshift([{ type: 'string', label: 'Time' },{label:'Stock Market Value',type:'number'}])
         setMarketValueList(valueList);
-        console.log(valueList)
       });
     }
     useEffect(()=>{

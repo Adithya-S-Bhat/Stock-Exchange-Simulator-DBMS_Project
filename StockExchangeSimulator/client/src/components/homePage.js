@@ -56,14 +56,12 @@ export default function HomePage(){
     const handleClickOpen = (id) => {
         const obj={id};
         Axios.post("http://localhost:8000/users/getSellTable",obj).then((response)=>{
-            console.log(response.data)
             setSellTable(response.data);
             setSid(id);
             setOpen(true);
         });
 
         Axios.post("http://localhost:8000/users/getBuyTable",obj).then((response)=>{
-          console.log(response.data)
           setBuyTable(response.data);
           // setSid(id);
           setOpen(true);
@@ -86,13 +84,11 @@ export default function HomePage(){
           "http://localhost:8000/users/addStock",
           obj
         ).then((response)=>{
-            console.log(response.data)
         });
     }
 
     const initialisation=async()=>{
         //authenticate
-        console.log("id"+localStorage.getItem('id'))
         if(localStorage.getItem('username')===null){
              navigate("/")
         }
@@ -102,7 +98,6 @@ export default function HomePage(){
                 userName
             ).then((response)=>{
                 localStorage.setItem("id", response.data.id);
-                console.log(response.data.id); 
             });
             
             let Iid= localStorage.getItem("id");
@@ -112,7 +107,6 @@ export default function HomePage(){
                 "http://localhost:8000/users/getUsername",
                 user_id
             ).then((response)=>{
-                console.log("user name " + response.data.name_i)
                 setUserNAME(response.data.name_i);
             })
 

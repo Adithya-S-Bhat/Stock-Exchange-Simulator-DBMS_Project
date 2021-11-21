@@ -14,18 +14,23 @@ export default function BrokerView(){
     const classes = useStyles();
     const [usersList, setUsersList] = React.useState([]);
     const initialisation=async()=>{
+    let username = localStorage.getItem("username");
+    let userName = {username};
+    await Axios.post(
+        "http://localhost:8000/users/getUserId",
+        userName
+    ).then((response)=>{
+        localStorage.setItem("id", response.data.id);
+    });
     let id = localStorage.getItem("id");
     let broker_id = {id};
-    console.log(broker_id);
     await Axios.post(
         "http://localhost:8000/users/getUsersListForBroker",
         broker_id
     ).then((response)=>{
         setUsersList(response.data);
-        console.log(response.data);
     });
 }
-
 useEffect(()=>{
     initialisation();
 },[]);
@@ -43,12 +48,12 @@ return (
         </ListItem>
         {usersList.map((record) => (
                 <ListItem>
-                    <ListItemText primary={record.name_i}style={{width:"90px"}}/>
-                    <ListItemText primary={record.phonenumber} style={{direction:"rtl"}}/>
-                    <ListItemText primary={record.aadharnumber} sstyle={{direction:"rtl"}}/>
-                    <ListItemText primary={record.pincode} style={{direction:"rtl"}}/>
-                    <ListItemText primary={record.city} style={{direction:"rtl"}}/>
-                    <ListItemText primary={record.state_i} style={{direction:"rtl"}}/>
+                    <ListItemText primary={record.name_i}style={{width:"150px"}}/>
+                    <ListItemText primary={record.phonenumber} style={{direction:"rtl",width:"175px"}}/>
+                    <ListItemText primary={record.aadharnumber} sstyle={{direction:"rtl",width:"160px"}}/>
+                    <ListItemText primary={record.pincode} style={{direction:"rtl",width:"120px"}}/>
+                    <ListItemText primary={record.city} style={{direction:"rtl",width:"100px"}}/>
+                    <ListItemText primary={record.state_i} style={{direction:"rtl",width:"105px"}}/>
                 </ListItem>
         ))}
         </div>

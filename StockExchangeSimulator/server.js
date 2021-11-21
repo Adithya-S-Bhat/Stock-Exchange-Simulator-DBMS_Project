@@ -39,16 +39,15 @@ const admin = new Client({
 admin.connect();
 
 function updateMarketValue(){
-    client2.query("select sum(currentvalue) from stocks",(err,response)=>{
+    client2.query("select sum(currentvalue) from stocks",(err,res)=>{
         if(err){
             console.log(err);
         }
         else{
-            //console.log(response.rows[0].sum)
-            admin.query("insert into marketvalue(dt,totalValue) values(NOW(),$1)",[response.rows[0].sum],(err,response)=>{
-                if(err)
-                    console.log(err);
-            });
+                admin.query("insert into marketvalue(totalValue) values($1)",[res.rows[0].sum],(err,response)=>{
+                        if(err)
+                            console.log(err);
+                });
         }
     }); 
 }

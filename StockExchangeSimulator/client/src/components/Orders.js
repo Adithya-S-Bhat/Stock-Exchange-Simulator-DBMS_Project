@@ -37,7 +37,6 @@ export default function Orders(){
             user_id
         ).then((response)=>{
             setSellOrders(response.data);
-            console.log(response.data)
         });
 
         await Axios.post(
@@ -45,7 +44,6 @@ export default function Orders(){
             user_id
         ).then((response)=>{
             setBuyOrders(response.data);
-            console.log(response.data)
         });
 
     }
