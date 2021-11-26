@@ -7,7 +7,7 @@ const { response } = require('express');
 const admin = new Client({
     host: 'localhost',
     port: 5432,
-    user: 'admin',
+    user: 'database_supervisor',
     password: '1234',
     database: 'stockexchange'
 });
